@@ -1,6 +1,6 @@
 class User < ActiveRecord::Base
 
-  include Gravatarable
+  #include Gravatarable
 
   # Authlogic config
   acts_as_authentic do |c|

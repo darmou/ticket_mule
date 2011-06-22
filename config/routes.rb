@@ -1,4 +1,48 @@
 TicketMule::Application.routes.draw do
+  root :to => "dashboard#index"
+
+  match '/login', :to => 'user_sessions#new', :as => :login
+  match '/logout', :to => 'user_sessions#destroy', :as => :logout
+
+  resources :tickets, :has_many => [:comments, :attachments]
+
+
+  match 'tickets/set_tickets_per_page/:per_page', :to => 'tickets#set_tickets_per_page'
+  match 'attachments/:ticket_id/:id', :via => :get, :to => 'attachments#show'
+
+  resources :dashboard, :only => :index
+
+  resources :users do
+    member do
+      post 'toggle'
+      post 'unlock'
+    end
+  end
+
+  resources :contacts do
+    member do
+      post 'toggle'
+    end
+  end
+
+  resource :user_session
+  resources :password_resets
+  resources :alerts
+
+
+  scope '/admin', :name_prefix => 'admin' do
+    match '/', :to => 'admin#index', :via => :get, :as => :index
+    match '/add_group', :to => 'admin#add_group' ,:via => :post, :as => :add_group
+    match '/add_status', :to => 'admin#add_status', :via => :post, :as => :add_status
+    match '/add_priority', :to => 'admin#add_priority', :via => :post, :as => :add_priority
+    match '/add_user', :to => 'admin#add_user', :via => :post, :as => :add_user
+    match '/toggle_group', :to => 'admin#toggle_group', :via => :post, :as => :toggle_group
+    match '/toggle_status', :to => 'admin#toggle_status', :via => :post, :as => :toggle_status
+    match '/toggle_priority', :to => 'admin#toggle_priority', :via => :post, :as => :toggle_priority
+  end
+
+  match '*url', :to => 'dashboard#index'
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

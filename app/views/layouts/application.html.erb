@@ -27,8 +27,8 @@
       </ul>
       -->
       <ul id="nav-right">
-        <%= tab_for :dashboard, dashboard_index_path, t('menu.dashboard') %>
-        <%= tab_for :tickets, tickets_path, t('menu.tickets') %>
+        <%= raw tab_for(:dashboard, dashboard_index_path, t('menu.dashboard')) %>
+        <%= raw tab_for(:tickets, tickets_path, t('menu.tickets')) %>
         <%= tab_for :contacts, contacts_path, t('menu.contacts') %>
         <%= tab_for :users, users_path, t('menu.users') %>
         <% if @current_user.admin? -%>

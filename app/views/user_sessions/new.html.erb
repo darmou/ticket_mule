@@ -2,8 +2,8 @@
   <h1><%=t 'sign_in' -%></h1>
 
   <div class="box">
-    <%= show_flash -%>
-    <% form_for @user_session, :url => user_session_path do |f| -%>
+    <%= raw show_flash -%>
+    <%= form_for @user_session, :url => user_session_path do |f| -%>
       <dl>
         <dt><label for="user_session_username"><%=t 'username' -%></label></dt>
         <dd><%= f.text_field :username, :size => 20, :class => "textfield" -%></dd>

@@ -1,0 +1,3 @@
+[submodule "vendor/bundle/searchlogic"]
+	path = vendor/bundle/searchlogic
+	url = git://github.com/functionreturnfunction/searchlogic.git

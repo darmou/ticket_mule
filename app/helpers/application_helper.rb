@@ -1,6 +1,6 @@
 # Methods added to this helper will be available to all templates in the application.
 module ApplicationHelper
-  
+
   def nice_date date
     # 31 Jan 2009 12:00 pm
     h date.strftime("%d %b %Y %I:%M %p")
