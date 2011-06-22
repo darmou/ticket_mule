@@ -4,7 +4,7 @@ class Contact < ActiveRecord::Base
   has_many :tickets
 
   # Scopes
-  named_scope :enabled, :order => 'last_name, first_name', :conditions => { :disabled_at => nil }
+  scope :enabled, :order => 'last_name, first_name', :conditions => { :disabled_at => nil }
 
   # Validations
   validates_presence_of :last_name

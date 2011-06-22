@@ -1,6 +1,8 @@
+require "tickets/gravatarable"
+
 class User < ActiveRecord::Base
 
-  #include Gravatarable
+  include Tickets::Gravatarable
 
   # Authlogic config
   acts_as_authentic do |c|
@@ -22,7 +24,7 @@ class User < ActiveRecord::Base
   validates_confirmation_of :email
 
   # Scopes
-  named_scope :enabled, :order => 'username', :conditions => { :disabled_at => nil }
+  scope :enabled, :order => 'username', :conditions => { :disabled_at => nil }
 
   attr_protected :admin
 

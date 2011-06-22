@@ -25,7 +25,7 @@ module ApplicationHelper
 
   # Return application url_root
   def app_root
-    ActionController::Base.relative_url_root
+    ActionController::Base.config.relative_url_root
   end
 
   def user_avatar(user)
