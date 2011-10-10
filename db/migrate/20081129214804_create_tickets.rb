@@ -6,6 +6,7 @@ class CreateTickets < ActiveRecord::Migration
       t.references :group, :null => false
       t.references :status, :null => false
       t.references :priority, :null => false
+      t.references :time_type, :null => false
       t.references :contact, :null => false
       t.integer :created_by, :null => false
       t.integer :owned_by
@@ -17,6 +18,7 @@ class CreateTickets < ActiveRecord::Migration
     add_index :tickets, :group_id
     add_index :tickets, :status_id
     add_index :tickets, :priority_id
+    add_index :tickets, :time_type_id
     add_index :tickets, :contact_id
     add_index :tickets, :created_by
     add_index :tickets, :owned_by

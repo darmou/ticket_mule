@@ -8,7 +8,7 @@
 <dd><%= form.text_field :last_name, :class => "textfield" -%></dd>
 
 <dt><label for="user_time_zone">Time zone</label></dt>
-<dd><%= form.time_zone_select :time_zone, ActiveSupport::TimeZone.us_zones, { :default => "Central Time (US & Canada)" }, { :class => "selectbox" } %></dd>
+<dd><%= form.time_zone_select :time_zone, ActiveSupport::TimeZone.us_zones, { :default => "Melbourne" }, { :class => "selectbox" } %></dd>
 
 <dt><label for="user_email">Email</label></dt>
 <dd><%= form.text_field :email, :class => "textfield" -%></dd>

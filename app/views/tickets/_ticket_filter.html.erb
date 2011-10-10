@@ -9,7 +9,7 @@
 </ul>
 
 <div class="right-container">
-<% form_for @search, :html => { :id => 'ticket-filter' } do |f| %>
+<%= form_for @search, :html => { :id => 'ticket-filter' } do |f| %>
   <p>
   <%= f.label :group_id_equals, "Group" %>
   <%= f.collection_select :group_id_equals, Group.all(:order => "name"), :id, :name, { :include_blank => true}, { :class => "selectbox" } %>
@@ -28,6 +28,11 @@
   <p>
   <%= f.label :priority_id_equals, "Priority" %>
   <%= f.collection_select :priority_id_equals, Priority.all, :id, :name, { :include_blank => true}, { :class => "selectbox" } %>
+  </p>
+
+  <p>
+  <%= f.label :time_type_id_equals, "Time Type" %>
+  <%= f.collection_select :time_type_id_equals, TimeType.all, :id, :name, { :include_blank => true}, { :class => "selectbox" } %>
   </p>
 
   <p>

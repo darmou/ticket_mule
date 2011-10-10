@@ -1,8 +1,8 @@
 <div id="login-content">
   <h1><%=t 'sign_in' -%></h1>
 
-  <div class="box">
-    <%= raw show_flash -%>
+  <div class="box"> 
+    <%= show_flash -%>
     <%= form_for @user_session, :url => user_session_path do |f| -%>
       <dl>
         <dt><label for="user_session_username"><%=t 'username' -%></label></dt>

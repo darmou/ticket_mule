@@ -24,9 +24,11 @@ pdf.bounding_box([pdf.bounds.left, pdf.bounds.top],:width  => pdf.bounds.width, 
     pdf.move_down(2)
 
     data = [["<b>Contact:</b> #{@ticket.contact.full_name}", @ticket.closed? ? "<b>Closed at:</b> #{nice_date @ticket.closed_at}" : ""],
-            ["<b>Created at:</b> #{nice_date @ticket.created_at}", "<b>Created by:</b> #{@ticket.creator.username}"],
+            ["<b>Created at:</b> #{nice_date @ticket.created_at}", "<b>Created by:</b> #{@ticket.creator.username} (#{@ticket.creator.first_name} #{@ticket.creator.last_name})"],
             ["<b>Priority:</b> #{@ticket.priority.name}","<b>Group:</b> #{@ticket.group.name}"],
-            ["<b>Status:</b> #{@ticket.status.name}","<b>Owner:</b> #{@ticket.owner.nil? ? 'Unassigned' : @ticket.owner.username}"]]
+            ["<b>Status:</b> #{@ticket.status.name}","<b>Owner:</b> #{@ticket.owner.nil? ? 'Unassigned' : @ticket.owner.username}"],
+			["<b>Time Type:</b> #{@ticket.time_type.name}",""],
+			]
 
     pdf.table data, :border_width => 0,
                     :font_size => 11,

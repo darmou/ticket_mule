@@ -7,6 +7,7 @@ class TicketTest < ActiveSupport::TestCase
     assert ticket.errors.invalid?(:title)
     assert ticket.errors.invalid?(:group_id)
     assert ticket.errors.invalid?(:status_id)
+    assert ticket.errors.invalid?(:time_type_id)
     assert ticket.errors.invalid?(:priority_id)
     assert ticket.errors.invalid?(:contact_id)
     assert ticket.errors.invalid?(:created_by)

@@ -7,6 +7,7 @@ module TicketsHelper
     @group_select = Group.enabled(:select => "id, name")
     @status_select = Status.enabled(:select => "id, name")
     @priority_select = Priority.enabled(:select => "id, name")
+    @time_type_select = TimeType.enabled(:select => "id, name")
     @owner_select = User.enabled(:select => "id, username")
 
     unless ticket.id.blank?
@@ -26,6 +27,10 @@ module TicketsHelper
         disabled_priority = Priority.find(ticket.priority_id)
         @priority_select.unshift(disabled_priority)
       end
+      unless ticket.time_type.blank? || ticket.time_type.enabled?
+        disabled_time_type = TimeType.find(ticket.time_type_id)
+        @time_type_select.unshift(disabled_time_type)
+      end
       unless ticket.owner.blank? || ticket.owner.enabled?
         disabled_owner = User.find(ticket.owned_by)
         @owner_select.unshift(disabled_owner)
@@ -33,7 +38,7 @@ module TicketsHelper
     end
 
     # build attachment file_field and return ticket
-    returning(ticket) do |t|
+    ticket.tap do |t|
         t.attachments.build #if t.attachments.empty?
     end
   end

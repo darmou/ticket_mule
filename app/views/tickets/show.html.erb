@@ -24,8 +24,8 @@
 <h2 class="left <%= @ticket.closed? ? 'disabled' : '' -%>">Ticket #<%= @ticket.id -%></h2>
 <br class="clear"/>
 
-<%= error_messages_for :comment %>
-<%= error_messages_for :attachment %>
+<%= render "shared/error_messages", :target => @comment %>
+<%= render "shared/error_messages", :target => @attachment %>
 
 
 <table class="profile <%= @ticket.closed? ? 'disabled' : '' -%>">
@@ -46,6 +46,10 @@
     <td class="field">Status:</td><td class="value"><%= @ticket.status.name -%></td>
     <td class="field">Priority:</td><td class="value"><%= @ticket.priority.name -%></td>
   </tr>
+  <tr>
+	 <td class="field">Time Type:</td><td class="value"><%= @ticket.time_type.name -%></td>
+     <td></td>
+  </tr>
   <% if @ticket.closed? %>
   <tr><td class="field">Closed at:</td><td colspan="3" class="value"><%= nice_date @ticket.closed_at unless @ticket.closed_at.nil? %></td></tr>
   <% end %>
@@ -54,7 +58,7 @@
 </table>
 
 <div id="add-comment">
-<% form_for [@ticket, Comment.new] do |f| %>
+<%= form_for [@ticket, Comment.new] do |f| %>
   <p>
     <%= f.text_area :comment, :size => "70x6", :class => "textarea" %>
   </p>
@@ -64,7 +68,7 @@
 </div>
 
 <div id="add-attachment">
-  <% form_for [@ticket, Attachment.new], :html => { :multipart => true } do |a| %>
+  <%= form_for [@ticket, Attachment.new], :html => { :multipart => true } do |a| %>
     <p>
       <%= a.file_field :data %>
       <span id="attachment_limit"><%= "Limit #{APP_CONFIG['attachment_size_limit']} megabytes" %></span>

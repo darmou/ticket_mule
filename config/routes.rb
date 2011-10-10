@@ -1,48 +1,71 @@
-TicketMule::Application.routes.draw do
-  root :to => "dashboard#index"
+TicketMuleRails31::Application.routes.draw do
+  
+  #match '/' => 'dashboard#index'
+  
+  root :to => 'dashboard#index'
+  
+  
 
-  match '/login', :to => 'user_sessions#new', :as => :login
-  match '/logout', :to => 'user_sessions#destroy', :as => :logout
+  match "login" => "user_sessions#new", :as => :login
+  match "logout" => "user_sessions#destroy", :as=>:logout
 
   resources :tickets, :has_many => [:comments, :attachments]
-
-
-  match 'tickets/set_tickets_per_page/:per_page', :to => 'tickets#set_tickets_per_page'
-  match 'attachments/:ticket_id/:id', :via => :get, :to => 'attachments#show'
+  match "ticket/comments" => "ticket#comments", :as => :ticket_comments
+  match "ticket/attachments" => "ticket#attachments", :as => :ticket_attachments
+  
+  
+  match "tickets/set_tickets_per_page/:per_page" => "tickets#set_tickets_per_page", :as => :per_page
+  
+  match "attachments/:ticket_id/:id" => "attachments#show", :as => :show, :conditions => { :method => :get }
 
   resources :dashboard, :only => :index
 
-  resources :users do
-    member do
-      post 'toggle'
-      post 'unlock'
-    end
-  end
+  # users can add themselves
+  resources :users, :member => { :toggle => :post, :unlock => :post }
+  match 'contacts/toggle_user' => 'contacts#toggle_user', :as => :toggle_user
 
-  resources :contacts do
-    member do
-      post 'toggle'
-    end
-  end
+  # only admins can add users
+  #resources :users, :member => { :toggle => :post, :unlock => :post }, :except => :new
+
+  resources :contacts, :member => { :toggle => :post }
+  match 'contacts/toggle_contact' => 'contacts#toggle_contact', :as => :toggle_contact
 
   resource :user_session
+
   resources :password_resets
+
   resources :alerts
 
+  
+  match "admin" => "admin#index", :as => :admin_index
+  match "admin/add_group" => "admin#add_group", :as => :add_group
+  match "admin/add_status" => "admin#add_status", :as => :add_status
+  match "admin/add_priority" => "admin#add_priority", :as => :add_priority
+  match "admin/add_time_type" => "admin#add_time_type", :as => :add_time_type
+  
+  match "admin/add_user" => "admin#add_user", :as => :add_user
+  match "admin/toggle_group" => "admin#toggle_group", :as => :toggle_group
+  match "admin/toggle_status" => "admin#toggle_status", :as => :toggle_status
+  match "admin/toggle_priority" => "admin#toggle_priority", :as => :toggle_priority
+  match "admin/toggle_time_type" => "admin#toggle_time_type", :as => :toggle_time_type
+  match "admin/reports" => "admin#reports", :as => :reports
+  
+  #with_options :controller => 'admin' do |a|
+  #  a.admin_index '/admin', :action => 'index', :conditions => { :method => :get }
+  #  a.add_group '/admin/add_group', :action => 'add_group', :conditions => { :method => :post }
+  #  a.add_status '/admin/add_status', :action => 'add_status', :conditions => { :method => :post }
+  #  a.add_priority '/admin/add_priority', :action => 'add_priority', :conditions => { :method => :post }
+  #  a.add_time_type '/admin/add_time_type', :action => 'add_time_type', :conditions => { :method => :post }
+  #  a.add_user '/admin/add_user', :action => 'add_user', :conditions => { :method => :post }
+  #  a.toggle_group '/admin/toggle_group', :action => 'toggle_group', :conditions => { :method => :post }
+  #  a.toggle_status '/admin/toggle_status', :action => 'toggle_status', :conditions => { :method => :post }
+  #  a.toggle_priority '/admin/toggle_priority', :action => 'toggle_priority', :conditions => { :method => :post }
+  #  a.toggle_time_type '/admin/toggle_time_type', :action => 'toggle_time_type', :conditions => { :method => :post }
+  #  a.reports '/admin/reports', :action => 'reports', :conditions => { :method => :post }
+  #end
 
-  scope '/admin', :name_prefix => 'admin' do
-    match '/', :to => 'admin#index', :via => :get, :as => :index
-    match '/add_group', :to => 'admin#add_group' ,:via => :post, :as => :add_group
-    match '/add_status', :to => 'admin#add_status', :via => :post, :as => :add_status
-    match '/add_priority', :to => 'admin#add_priority', :via => :post, :as => :add_priority
-    match '/add_user', :to => 'admin#add_user', :via => :post, :as => :add_user
-    match '/toggle_group', :to => 'admin#toggle_group', :via => :post, :as => :toggle_group
-    match '/toggle_status', :to => 'admin#toggle_status', :via => :post, :as => :toggle_status
-    match '/toggle_priority', :to => 'admin#toggle_priority', :via => :post, :as => :toggle_priority
-  end
-
-  match '*url', :to => 'dashboard#index'
-
+  match "*url" => "dashboard#index", :as => :index
+  
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
@@ -92,7 +115,7 @@ TicketMule::Application.routes.draw do
 
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.
-  # root :to => "welcome#index"
+  # root :to => 'welcome#index'
 
   # See how all your routes lay out with "rake routes"
 

@@ -7,9 +7,12 @@
   <title><%= controller.controller_name.capitalize %> &#8250; <%=t 'ticketmule' -%></title>
   <%= stylesheet_link_tag 'screen', :media => "screen, projection" %>
   <%= stylesheet_link_tag 'print', :media => "print" %>
+  <%= stylesheet_link_tag    "application" %>
+  <%= javascript_include_tag "application" %>
+  <%= csrf_meta_tags %>
   <%= javascript_include_tag 'jquery.min', 'application', :cache => true -%>
   <%= yield :head -%>
-  <link rel="shortcut icon" type="image/ico" href="<%= app_root %>/favicon.ico" />
+  <link rel="shortcut icon" type="image/ico" href="<%=app_root%>/favicon.ico" />
 </head>
 
 <body>
@@ -27,8 +30,8 @@
       </ul>
       -->
       <ul id="nav-right">
-        <%= raw tab_for(:dashboard, dashboard_index_path, t('menu.dashboard')) %>
-        <%= raw tab_for(:tickets, tickets_path, t('menu.tickets')) %>
+        <%= tab_for :dashboard, dashboard_index_path, t('menu.dashboard') %>
+        <%= tab_for :tickets, tickets_path, t('menu.tickets') %>
         <%= tab_for :contacts, contacts_path, t('menu.contacts') %>
         <%= tab_for :users, users_path, t('menu.users') %>
         <% if @current_user.admin? -%>
@@ -44,7 +47,7 @@
 <div id="main">
   <div id="left-column">
     <div class="box">
-      <%= raw show_flash %>
+      <%= show_flash %>
       <%= yield %>
     </div>
   </div><!-- end left-column -->
@@ -56,7 +59,7 @@
         <p>
         <label for="jump_id"><em><%=t 'enter_ticket_no' -%></em></label><br/>
           <input type="text" id="jump_id" size="8" class="textfield"/>
-          <input type="hidden" id="app_root" value="<%= app_root%>"/>
+          <input type="hidden" id="app_root" value="<%=app_root%>"/>
           <button class="button"><%=t 'button.go' -%></button>
         </p>
       </form>

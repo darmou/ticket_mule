@@ -1,6 +1,6 @@
-<%= error_messages_for :ticket -%>
+<%= render "shared/error_messages", :target => @ticket %> 
 
-<% form_for setup_ticket(@ticket), :html => { :multipart => true } do |f| -%>
+<%= form_for setup_ticket(@ticket), :html => { :multipart => true } do |f| -%>
 <dl>
 <dt><label for="ticket_title">Title</label></dt>
 <dd><%= f.text_field :title, {:style => "width: 440px", :class => "textfield" } -%></dd>
@@ -20,6 +20,10 @@
 <dt><label for="ticket_priority_id">Priority</label></dt>
 <%#= select 'ticket','priority_id',Priority.find(:all).collect {|p| [ p.priority, p.id ] }, {}, { :style => "width: 130px", :class => "selectbox" } -%>
 <dd><%= f.collection_select :priority_id, @priority_select, :id, :name, { :include_blank => true }, { :class => "selectbox" } -%></dd>
+
+<dt><label for="ticket_time_type_id">Time Type</label></dt>
+<%#= select 'ticket','priority_id',Priority.find(:all).collect {|p| [ p.priority, p.id ] }, {}, { :style => "width: 130px", :class => "selectbox" } -%>
+<dd><%= f.collection_select :time_type_id, @time_type_select, :id, :name, { :include_blank => true }, { :class => "selectbox" } -%></dd>
 
 <dt><label for="ticket_owned_by">Owner</label></dt>
 <%#= select 'ticket','owned_by',User.find(:all).collect {|u| [ u.username, u.id ] }, { :include_blank => true }, { :style => "width: 130px", :class => "selectbox" } -%>

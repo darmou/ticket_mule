@@ -1,3 +1,4 @@
+# encoding: UTF-8
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
@@ -82,6 +83,7 @@ ActiveRecord::Schema.define(:version => 20090914141258) do
     t.integer  "group_id",                      :null => false
     t.integer  "status_id",                     :null => false
     t.integer  "priority_id",                   :null => false
+    t.integer  "time_type_id",                  :null => false
     t.integer  "contact_id",                    :null => false
     t.integer  "created_by",                    :null => false
     t.integer  "owned_by"
@@ -97,6 +99,12 @@ ActiveRecord::Schema.define(:version => 20090914141258) do
   add_index "tickets", ["owned_by"], :name => "index_tickets_on_owned_by"
   add_index "tickets", ["priority_id"], :name => "index_tickets_on_priority_id"
   add_index "tickets", ["status_id"], :name => "index_tickets_on_status_id"
+  add_index "tickets", ["time_type_id"], :name => "index_tickets_on_time_type_id"
+
+  create_table "time_types", :force => true do |t|
+    t.string   "name",        :null => false
+    t.datetime "disabled_at"
+  end
 
   create_table "users", :force => true do |t|
     t.string   "username",                              :null => false

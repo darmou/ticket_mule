@@ -1,6 +1,7 @@
+require 'pry'
 # Methods added to this helper will be available to all templates in the application.
 module ApplicationHelper
-
+  
   def nice_date date
     # 31 Jan 2009 12:00 pm
     h date.strftime("%d %b %Y %I:%M %p")
@@ -14,8 +15,8 @@ module ApplicationHelper
   # Show flash messages
   def show_flash
     [:success, :error, :warning].collect do |key|
-      content_tag(:div, content_tag(:p, flash[key]), :class => "flash f-#{key}") unless flash[key].blank?
-    end.join
+      content_tag(:div, content_tag(:p, flash[key].html_safe), :class => "flash f-#{key}") unless flash[key].blank?
+    end.join.html_safe
   end
 
   # Generate application tabs, signifying current tab
@@ -25,7 +26,9 @@ module ApplicationHelper
 
   # Return application url_root
   def app_root
-    ActionController::Base.config.relative_url_root
+    #binding.pry
+    return "/"
+    #ActionController::Base.relative_url_root
   end
 
   def user_avatar(user)
