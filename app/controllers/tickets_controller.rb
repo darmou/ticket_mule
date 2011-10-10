@@ -27,14 +27,14 @@ class TicketsController < ApplicationController
       end
       @tickets = Ticket.search(params[:search]).paginate(
         :page => params[:page],
-        :include => [:creator, :owner, :group, :status, :priority, :contact],
-        :order => 'updated_at DESC',
+        :include => [:creator, :owner, :group, :status, :priority, :time_type, :contact],
+        :order => 'tickets.updated_at DESC',
         :per_page => @tickets_per_page)
     else
       @tickets = Ticket.not_closed.paginate(
         :page => params[:page],
-        :include => [:creator, :owner, :group, :status, :priority, :contact],
-        :order => 'updated_at DESC',
+        :include => [:creator, :owner, :group, :status, :priority, :time_type, :contact],
+        :order => 'tickets.updated_at DESC',
         :per_page => @tickets_per_page)
     end
 

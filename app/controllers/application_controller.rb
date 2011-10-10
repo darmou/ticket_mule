@@ -1,5 +1,8 @@
 # Filters added to this controller apply to all controllers in the application.
 # Likewise, all the methods added will be available for all controllers.
+require 'pry'
+
+#debugger
 
 class ApplicationController < ActionController::Base
   helper :all # include all helpers, all the time
@@ -9,6 +12,7 @@ class ApplicationController < ActionController::Base
   # See ActionController::RequestForgeryProtection for details
   # Uncomment the :secret if you're not using the cookie session store
   protect_from_forgery # :secret => '038c2ea0534ce4156b1aa41d6332e06c'
+  
 
 
   ActionView::Base.field_error_proc = Proc.new do |html_tag, instance|
@@ -70,7 +74,7 @@ class ApplicationController < ActionController::Base
   def store_location
     session[:return_to] =
     if request.get?
-      request.request_uri
+      request.url
     else
       request.referrer
     end

@@ -3,6 +3,16 @@ class DashboardController < ApplicationController
   before_filter :set_current_tab
 
   def index
+    #todo lets put our wufoo grabbing stuff hree
+    #see which is the lastest date of tickets and then grab any tickets since the latest or if no tickets
+    #grab everything and put it into our system as open tickets
+    puts "test are we here yet"
+    lastTicket = Ticket.find(:last)
+    if not lastTicket.nil?
+      last_date = lastTicket.created_at.to_s
+      puts last_date
+    end 
+    
     @active_tickets = Ticket.not_closed.active_tickets
     @closed_tickets = Ticket.closed_tickets
 
