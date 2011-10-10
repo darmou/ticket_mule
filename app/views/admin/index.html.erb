@@ -4,16 +4,19 @@
 
 <h2>Admin</h2>
 
-<%= error_messages_for :group %>
-<%= error_messages_for :status %>
-<%= error_messages_for :priority %>
-<%= error_messages_for :user %>
+<%= render "shared/error_messages", :target => @group %> 
+<%= render "shared/error_messages", :target => @status %> 
+<%= render "shared/error_messages", :target => @priority %> 
+<%= render "shared/error_messages", :target => @time_type %> 
+<%= render "shared/error_messages", :target => @user %> 
 
 <ul class="jquery-tabs">
   <li><a href="#">Groups</a></li>
   <li><a href="#">Statuses</a></li>
   <li><a href="#">Priorities</a></li>
+ <li><a href="#">Time Types</a></li>
   <li><a href="#">Users</a></li>
+  <li><a href="#">Report</a></li>
 </ul>
 
 <div class="jquery-tab-panes">
@@ -40,7 +43,7 @@
       <% end -%>
     </ul>
     <% end -%>
-    <% form_for Group.new, :url => { :action => 'add_group', :controller => 'admin' }, :html => { :class => 'admin-form' } do |f| -%>
+    <%= form_for Group.new, :url => { :action => 'add_group', :controller => 'admin' }, :html => { :class => 'admin-form' } do |f| -%>
       <p>
         <%= f.text_field :name, :class => 'textfield' -%>
         <%= f.submit "Add Group", :class => 'button' -%>
@@ -70,7 +73,7 @@
       <% end -%>
     </ul>
     <% end -%>
-    <% form_for Status.new, :url => { :action => 'add_status', :controller => 'admin' }, :html => { :class => 'admin-form' } do |f| -%>
+    <%= form_for Status.new, :url => { :action => 'add_status', :controller => 'admin' }, :html => { :class => 'admin-form' } do |f| -%>
       <p>
         <%= f.text_field :name, :class => 'textfield' -%>
         <%= f.submit "Add Status", :class => 'button' -%>
@@ -100,7 +103,7 @@
       <% end -%>
     </ul>
     <% end -%>
-    <% form_for Priority.new, :url => { :action => 'add_priority', :controller => 'admin' }, :html => { :class => 'admin-form' } do |f| -%>
+    <%= form_for Priority.new, :url => { :action => 'add_priority', :controller => 'admin' }, :html => { :class => 'admin-form' } do |f| -%>
       <p>
         <%= f.text_field :name, :class => 'textfield' -%>
         <%= f.submit "Add Priority", :class => 'button' -%>
@@ -108,7 +111,37 @@
     <% end -%>
   </div>
   <div class="pane">
-    <% form_for :user, :url => { :action => 'add_user', :controller => 'admin' }, :html => { :id => 'add-user', :class => 'admin-form' } do |f| -%>
+    <h3 class="toggle" id="time-type-enabled-toggle">Enabled</h3>
+    <% unless @time_types_enabled.blank? -%>
+    <ul class="admin-list" id="time-type-enabled-list">
+      <% @time_types_enabled.each do |p| -%>
+        <li>
+          <%= p.name -%>
+          <span><%= link_to 'Disable', { :action=> 'toggle_time_type', :controller => 'admin', :id => p.id }, :class => 'disable', :method => :post, :confirm => "Really disable #{p.name} time type?" -%></span>
+        </li>
+      <% end -%>
+    </ul>
+    <% end -%>
+    <h3 class="toggle" id="time-type-disabled-toggle">Disabled</h3>
+    <% unless @time_types_disabled.blank? -%>
+    <ul class="admin-list" id="time-type-disabled-list">
+      <% @time_types_disabled.each do |p| -%>
+        <li>
+          <%= p.name -%>
+          <span><%= link_to 'Enable', { :action=> 'toggle_time_type', :controller => 'admin', :id => p.id }, :class => 'enable', :method => :post, :confirm => "Really enable #{p.name} time type?" -%></span>
+        </li>
+      <% end -%>
+    </ul>
+    <% end -%>
+    <%= form_for Priority.new, :url => { :action => 'add_time_type', :controller => 'admin' }, :html => { :class => 'admin-form' } do |f| -%>
+      <p>
+        <%= f.text_field :name, :class => 'textfield' -%>
+        <%= f.submit "Add Time Type", :class => 'button' -%>
+      </p>
+    <% end -%>
+  </div>
+  <div class="pane">
+    <%= form_for :user, :url => { :action => 'add_user', :controller => 'admin' }, :html => { :id => 'add-user', :class => 'admin-form' } do |f| -%>
       <p>
         <label for="user_username">Username</label>
         <%= f.text_field :username, :size => 30, :class => 'textfield' -%>
@@ -123,7 +156,7 @@
       </p>
       <p>
         <label for="user_time_zone">Time zone</label>
-        <%= f.time_zone_select :time_zone, ActiveSupport::TimeZone.us_zones, { :default => 'Central Time (US & Canada)' }, { :class => 'selectbox' } -%>
+        <%= f.time_zone_select :time_zone, ActiveSupport::TimeZone.us_zones, { :default => 'Melbourne' }, { :class => 'selectbox' } -%>
       </p>
       <p>
         <label for="user_email">Email</label>
@@ -145,6 +178,60 @@
         <%= f.submit 'Add User', :class => 'button' -%>
       </p>
     <% end -%>
+  </div>
+  <div class="pane">
+	<%= form_tag("/admin/reports", :class => 'admin-form', :method=>'post') do %>
+	  <p>
+	  <label for="start_date">Start Date</label>
+       <% default_start_date =  Chronic.parse "two weeks ago"%>
+	   <%= select_date(default_start_date, :order => [:day, :month, :year],:prefix => 'start_date')  %>
+	  </p>
+	  <p>
+	<label for="end_date">End Date</label>
+
+	  <%= date_select('report', 'end_date', :order => [:day, :month, :year])%>
+	  </p><p>
+	  <%= submit_tag "View Report", :class => 'button' %>  
+	</p>
+	<% end %>
+	<% if !@start_date.nil? -%>
+	<p><strong>Start Date: <%= @start_date  %>
+
+		
+		</strong></p>
+		<p><strong>End Date: <%= @end_date  %>
+
+
+			</strong></p>
+			<h2>Breakdown by Schools And Groups</h2>
+			<p>
+			<% @group_hash.each do |key, value| %> 
+		
+			  <%=h "#{key.to_s} #{value.to_s}" %> 
+			  <br/>
+			<% end %>
+			</p>
+			<h2>Breakdown by Time Type</h2>
+			<p>
+			<% @time_type_hash.each do |key, value| %> 
+		
+			  <%=h "#{key.to_s} #{value.to_s}" %> 
+			  <br/>
+			<% end %>
+			</p>
+			<h2>Breakdown by Person</h2>
+			<p>
+			<% @user_hash.each do |key, value| %> 
+		
+			  <%=h "#{key.to_s} #{value.to_s}" %> 
+			  <br/>
+			<% end %>
+			</p>
+			
+
+		
+
+	<% end -%>
   </div>
 </div>
 
