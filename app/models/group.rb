@@ -4,8 +4,8 @@ class Group < ActiveRecord::Base
   has_many :tickets
 
   # Scopes
-  named_scope :enabled, :order => 'name', :conditions => { :disabled_at => nil }
-  named_scope :disabled, :order => 'name', :conditions => ['disabled_at IS NOT NULL']
+  scope :enabled, :order => 'name', :conditions => { :disabled_at => nil }
+  scope :disabled, :order => 'name', :conditions => ['disabled_at IS NOT NULL']
 
   # Validations
   validates_presence_of :name

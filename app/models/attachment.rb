@@ -1,9 +1,4 @@
-require 'digest/sha1'
-
 class Attachment < ActiveRecord::Base
-
-  before_create :on_create_randomize_file_name
-  before_update :on_update_randomize_file_name
 
   # Paperclip config
   has_attached_file :data,
@@ -65,20 +60,4 @@ class Attachment < ActiveRecord::Base
     end
   end
 
-  private
-
-  def on_create_randomize_file_name
-    if (data_file_size)
-      extension = File.extname(data_file_name).downcase
-      self.data.instance_write(:file_name, "#{ActiveSupport::SecureRandom.hex(16)}#{extension}")
-    end
-  end
-
-
-  def on_update_randomize_file_name
-    if @changed_attributes and @changed_attributes["data_file_size"] and data_file_size
-      extension = File.extname(data_file_name).downcase
-      self.data.instance_write(:file_name, "#{ActiveSupport::SecureRandom.hex(16)}#{extension}")
-    end
-  end
 end

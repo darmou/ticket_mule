@@ -1,8 +1,7 @@
-require "tickets/gravatarable"
-
+require 'gravatarable'
 class User < ActiveRecord::Base
 
-  include Tickets::Gravatarable
+  include Gravatarable
 
   # Authlogic config
   acts_as_authentic do |c|

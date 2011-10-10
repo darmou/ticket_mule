@@ -1,11 +1,11 @@
 class Priority < ActiveRecord::Base
-
+  acts_as_reportable
   # Associations
   has_many :tickets
 
   # Scopes
-  named_scope :enabled, :order => 'name', :conditions => { :disabled_at => nil }
-  named_scope :disabled, :order => 'name', :conditions => ['disabled_at IS NOT NULL']
+  scope :enabled, :order => 'name', :conditions => { :disabled_at => nil }
+  scope :disabled, :order => 'name', :conditions => ['disabled_at IS NOT NULL']
 
   # Validations
   validates_presence_of :name
@@ -13,7 +13,7 @@ class Priority < ActiveRecord::Base
 
   # for css purposes, distinguish between standard or custom priority
   def standard?
-    self.name.downcase == "high" || self.name.downcase == "medium" || self.name.downcase == "low"
+    self.name.downcase == "urgent" || self.name.downcase == "standard" || self.name.downcase == "low"
   end
 
   def enabled?

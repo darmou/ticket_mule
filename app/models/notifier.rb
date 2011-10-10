@@ -1,6 +1,13 @@
 class Notifier < ActionMailer::Base
   default_url_options[:host] = APP_CONFIG['domain_name']
 
+  #def deliver_owner_alert(ticket)
+  #  admin = User.find(:first, :conditions => [ "admin = ?", true])
+  #  mail(   :to => ticket.owner.email,
+  #              :from => '"#{admin.first_name} #{admin.last_name}" <#{admin.email}>',
+  #              :subject => "#{ticket.owner.first_name} #{ticket.owner.last_name} created a new ticket for '#{ticket.title}'")
+  #end  
+    
   def password_reset_instructions(user)
     subject       "Password Reset Instructions"
     from          APP_CONFIG['app_email']

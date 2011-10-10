@@ -1,13 +1,13 @@
 class Status < ActiveRecord::Base
-
+  acts_as_reportable
   # Associations
   has_many :tickets
 
   # Scopes
-  named_scope :open, :conditions => "name = 'Open'"
-  named_scope :closed, :conditions => "name = 'Closed'"
-  named_scope :enabled, :order => 'name', :conditions => { :disabled_at => nil }
-  named_scope :disabled, :order => 'name', :conditions => ['disabled_at IS NOT NULL']
+  scope :open, :conditions => "name = 'Open'"
+  scope :closed, :conditions => "name = 'Closed'"
+  scope :enabled, :order => 'name', :conditions => { :disabled_at => nil }
+  scope :disabled, :order => 'name', :conditions => ['disabled_at IS NOT NULL']
 
   # Validations
   validates_presence_of :name
