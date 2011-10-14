@@ -7,7 +7,7 @@
       <%= link_to 'Disable', toggle_contact_path, :confirm => "Really disable contact #{@contact.full_name}?", :method => :post, :class => 'disable', :title => 'Disable contact' -%> |
     <% end -%>
   <% end -%>
-  <%= link_to 'Back', :back, :class => 'back', :title => 'Go back' -%>
+  <%= link_to 'Back', '/contacts' , :class => 'back', :title => 'Go back' -%>
 </div>
 
 <h2<%= @contact.enabled? ? '' : ' class="disabled"' -%>><%=h @contact.full_name -%></h2>

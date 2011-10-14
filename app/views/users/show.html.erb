@@ -12,7 +12,7 @@
   <% elsif @current_user.id == @user.id -%>
     <%= link_to 'Edit', edit_user_path, :class => 'edit-user', :title => 'Edit user' %> |
   <% end -%>
-  <%= link_to 'Back', :back, :class => 'back', :title => 'Go back' -%>
+  <%= link_to 'Back', '/users' , :class => 'back', :title => 'Go back' -%>
 </div>
 
 <%#= image_tag "avatar.gif", :alt => "", :class => "profile-avatar" %>

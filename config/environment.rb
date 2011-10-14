@@ -6,7 +6,7 @@ require "chronic"
 require "wuparty"
 
 # Initialize the rails application
-TicketMuleRails31::Application.initialize!
+TicketMule::Application.initialize!
 
 
 
