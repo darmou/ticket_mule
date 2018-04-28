@@ -1,5 +1,5 @@
 source 'http://rubygems.org'
-
+ruby "ruby-2.2.4"
 gem 'rails', '3.1.0'
 
 # Bundle edge Rails instead:
@@ -7,10 +7,10 @@ gem 'rails', '3.1.0'
 
 gem 'sqlite3'
 
-
+gem 'prawn'
 gem 'prawn-core' 
 gem 'prawn-format' 
-gem 'prawn-layout' 
+#gem 'prawn-layout' 
 gem 'prawn-security'
 gem 'ruport'
 gem 'acts_as_reportable'
@@ -24,7 +24,7 @@ gem 'prawn'
 gem 'populator'
 gem 'pry'
 gem 'faker'
-gem 'ruby-debug19'
+gem 'byebug'
 
 # Gems used only for assets and not required
 # in production environments by default.
