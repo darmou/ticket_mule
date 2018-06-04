@@ -97,13 +97,23 @@ GEM
       activerecord (~> 3.0)
     polyglot (0.3.5)
     populator (1.0.0)
+    power_assert (1.1.1)
     prawn (2.2.2)
       pdf-core (~> 0.7.0)
       ttfunk (~> 1.5)
     prawn-core (0.8.4)
     prawn-format (0.2.3)
       prawn-core
+    prawn-rails (1.0.1)
+      prawn
+      prawn-table
+      rails (>= 3.1.0)
     prawn-security (0.8.4)
+    prawn-table (0.2.2)
+      prawn (>= 1.3.0, < 3.0.0)
+    prawnto (0.1.1)
+      prawn
+      rails (>= 2.1)
     pry (0.11.3)
       coderay (~> 1.1.0)
       method_source (~> 0.9.0)
@@ -155,6 +165,8 @@ GEM
       rack (~> 1.0)
       tilt (~> 1.1, != 1.3.0)
     sqlite3 (1.3.13)
+    test-unit (3.2.8)
+      power_assert
     thor (0.14.6)
     tilt (1.3.7)
     transaction-simple (1.4.0.2)
@@ -191,16 +203,22 @@ DEPENDENCIES
   prawn
   prawn-core
   prawn-format
+  prawn-rails
   prawn-security
+  prawnto
   pry
   rails (= 3.1.0)
   ruport
   sass-rails (~> 3.1.0)
   sqlite3
+  test-unit
   turn
   uglifier
   will_paginate
   wuparty
 
+RUBY VERSION
+   ruby 2.2.4p230
+
 BUNDLED WITH
-   1.12.5
+   1.16.2

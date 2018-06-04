@@ -5,11 +5,15 @@ gem 'rails', '3.1.0'
 # Bundle edge Rails instead:
 # gem 'rails',     :git => 'git://github.com/rails/rails.git'
 
+gem 'jquery-rails'
 gem 'sqlite3'
-
+#gem 'prawn-table', '~> 0.1.0'
+gem 'prawnto'
 gem 'prawn'
 gem 'prawn-core' 
+#gem 'prawn-layout'
 gem 'prawn-format' 
+gem 'prawn-rails'
 #gem 'prawn-layout' 
 gem 'prawn-security'
 gem 'ruport'
@@ -46,6 +50,7 @@ gem 'jquery-rails'
 # gem 'ruby-debug19', :require => 'ruby-debug'
 
 group :test do
+  gem 'test-unit'
   # Pretty printed test output
   gem 'turn', :require => false
 end

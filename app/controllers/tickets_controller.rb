@@ -31,10 +31,9 @@ class TicketsController < ApplicationController
         :order => 'tickets.updated_at DESC',
         :per_page => @tickets_per_page)
     else
-      @tickets = Ticket.not_closed.paginate(
+      #Puppy.order(:name).paginate(page: params[:page], per_page: 4)
+      @tickets = Ticket.not_closed.order('updated_at DESC').paginate(
         :page => params[:page],
-        :include => [:creator, :owner, :group, :status, :priority, :time_type, :contact],
-        :order => 'tickets.updated_at DESC',
         :per_page => @tickets_per_page)
     end
 

@@ -5,12 +5,12 @@
   <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
   <meta name="description" content="TicketMule support ticket tracking" />
   <title><%= controller.controller_name.capitalize %> &#8250; <%=t 'ticketmule' -%></title>
+  <%= javascript_include_tag 'jquery.min', 'application', :cache => true -%>
+  <%= javascript_include_tag 'jquery-ujs.min', 'application', :cache => true -%>
   <%= stylesheet_link_tag 'screen', :media => "screen, projection" %>
   <%= stylesheet_link_tag 'print', :media => "print" %>
-  <%= stylesheet_link_tag    "application" %>
-  <%= javascript_include_tag "application" %>
   <%= csrf_meta_tags %>
-  <%= javascript_include_tag 'jquery.min', 'application', :cache => true -%>
+
   <%= yield :head -%>
   <link rel="shortcut icon" type="image/ico" href="<%=app_root%>/favicon.ico" />
 </head>

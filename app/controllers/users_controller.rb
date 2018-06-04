@@ -12,7 +12,7 @@ class UsersController < ApplicationController
 
   def index
     unless params[:index]
-      @users = User.paginate :page => params[:page], :order => 'last_name, first_name', :per_page => 10
+      @users = User.order(:first_name, :last_name).paginate :page => params[:page], :per_page => 10
     else
       @initial = params[:index]
       @users = User.paginate :page => params[:page], :conditions => ["last_name like ?", @initial+'%'], :order => 'last_name, first_name', :per_page => 10

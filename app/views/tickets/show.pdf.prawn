@@ -1,7 +1,7 @@
 require 'prawn/format'
-require 'prawn/layout'
+#require 'prawn/layout'
 
-#Prawn.debug = true
+Prawn.debug = true
 
 #pdf.header pdf.margin_box.top_left do
 #  pdf.font "Helvetica" do
@@ -10,44 +10,39 @@ require 'prawn/layout'
 #  end
 #end
 
-pdf.footer [pdf.margin_box.left, pdf.margin_box.bottom + 10] do
-  pdf.stroke_horizontal_rule
-  pdf.text "<br/>Ticket ##{@ticket.id} - TicketMule", :size => 9, :align => :right
-end
+#pdf.footer [pdf.margin_box.left, pdf.margin_box.bottom + 10] do
+#  pdf.stroke_horizontal_rule
+#  pdf.text "<br/>Ticket ##{@ticket.id} - TicketMule", :size => 9, :align => :right
+#end
+
+#pdf.repeat :all
+
+
+#end
+
+
 
 pdf.bounding_box([pdf.bounds.left, pdf.bounds.top],:width  => pdf.bounds.width, :height => pdf.bounds.height - 50) do
-  pdf.text "<b>Ticket ##{@ticket.id}</b>", :size => 16
+
+  pdf.text "Ticket ##{@ticket.id}", :size => 16, :style => :bold
   pdf.move_down(16)
 
   pdf.font_size(11) do
-    pdf.text "<b>Title:</b> #{@ticket.title}"
+    pdf.text "Title: ", :style => :bold
+    pdf.text "#{@ticket.title}"
     pdf.move_down(2)
 
-    data = [["<b>Contact:</b> #{@ticket.contact.full_name}", @ticket.closed? ? "<b>Closed at:</b> #{nice_date @ticket.closed_at}" : ""],
-            ["<b>Created at:</b> #{nice_date @ticket.created_at}", "<b>Created by:</b> #{@ticket.creator.username} (#{@ticket.creator.first_name} #{@ticket.creator.last_name})"],
-            ["<b>Priority:</b> #{@ticket.priority.name}","<b>Group:</b> #{@ticket.group.name}"],
-            ["<b>Status:</b> #{@ticket.status.name}","<b>Owner:</b> #{@ticket.owner.nil? ? 'Unassigned' : @ticket.owner.username}"],
-			["<b>Time Type:</b> #{@ticket.time_type.name}",""],
+    data = [["Contact: #{@ticket.contact.full_name}", @ticket.closed? ? "Closed at: #{nice_date @ticket.closed_at}" : ""],
+            ["Created at: #{nice_date @ticket.created_at}", "Created by: #{@ticket.creator.username} (#{@ticket.creator.first_name} #{@ticket.creator.last_name})"],
+            ["Priority: #{@ticket.priority.name}","Group: #{@ticket.group.name}"],
+            ["Status: #{@ticket.status.name}","Owner: #{@ticket.owner.nil? ? 'Unassigned' : @ticket.owner.username}"],
+			["Time Type:#{@ticket.time_type.name}",""],
 			]
 
-    pdf.table data, :border_width => 0,
-                    :font_size => 11,
-                    :column_widths => { 0 => 270, 1 => 270 },
-                    :position => :left,
-                    :horizontal_padding => 0
-
+    pdf.table data
     pdf.move_down(5)
-
-    pdf.text "<b>Details:</b>"
-    pdf.text "#{@ticket.details}"
-
-    unless @ticket.attachments.empty?
-      pdf.move_down(10)
-      pdf.text "<b>Attachments:</b>"
-      @ticket.attachments.each_with_index do |a, i|
-        pdf.text "#{i+1}. #{a.name} #{a.nice_file_size}"
-      end
-    end
+    pdf.text "Details:"
+    pdf.text "#{@ticket.details}", :style => :bold
   end
 end
 

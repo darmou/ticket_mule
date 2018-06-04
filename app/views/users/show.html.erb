@@ -40,7 +40,7 @@
   <% end -%>
 </table>
 
-<% unless @recently_assigned_to.empty? -%>
+<% unless @recently_assigned_to.empty? and @recently_assigned_to -%>
   <h3 class="toggle" id="assigned-to-toggle">Recently Assigned Tickets</h3>
   <div id="assigned-to-listing">
   <table class="listing" cellspacing="0">
@@ -74,7 +74,7 @@
   </div>
 <% end -%>
 
-<% if (@current_user.id == @user.id or @current_user.admin?) and !@user.alerts.empty? -%>
+<% if ((@current_user.id == @user.id or @current_user.admin?) and @user and @user.alerts) -%>
   <h3 class="toggle" id="alerts-toggle">My Ticket Alerts</h3>
   <div id="alert-list">
     <ul>
